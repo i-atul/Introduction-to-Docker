@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Docker</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background: #f8f9fa; color: #222; }
+        .container { max-width: 900px; margin: 40px auto; background: #fff; padding: 32px 40px 40px 40px; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+        h1, h2, h3 { color: #1a237e; }
+        h1 { font-size: 2.5rem; margin-bottom: 0.5em; }
+        h2 { font-size: 1.6rem; margin-top: 2em; }
+        h3 { font-size: 1.2rem; margin-top: 1.2em; }
+        ul, ol { margin-left: 2em; }
+        section { margin-bottom: 2em; }
+        code { background: #e3e7f1; padding: 2px 6px; border-radius: 4px; font-size: 1em; }
+        .back-link { display: inline-block; margin-top: 2em; color: #3949ab; text-decoration: none; font-weight: 500; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Introduction to Docker</h1>
+    <section>
+        <p><b>Docker</b> is an open-source platform that automates the deployment, scaling, and management of applications using container technology. Containers are lightweight, portable, and self-contained environments that package all dependencies required for software to run reliably across different computing environments. Docker addresses the challenge of environment consistency, making it a cornerstone of modern DevOps and cloud-native development.</p>
+    </section>
+    <section>
+        <h2>2. Why Docker?</h2>
+        <h3>Consistency Across Environments</h3>
+        <p><b>Problem:</b> Software often fails to run identically in development, testing, and production due to differences in system configurations, libraries, and dependencies.</p>
+        <p><b>Solution:</b> Docker containers encapsulate all necessary components, ensuring that applications run the same way everywhere. This eliminates the "it works on my machine" problem and enhances reproducibility, which is crucial for both academic research and industrial deployment.</p>
+        <h3>Isolation</h3>
+        <p><b>Problem:</b> Running multiple applications on a single host can lead to conflicts, such as dependency clashes and resource contention, which may compromise system stability and security.</p>
+        <p><b>Solution:</b> Docker provides isolated environments for each application, preventing interference and enabling secure, stable multi-application hosting. This isolation is achieved at the operating system level, making containers more efficient than traditional virtual machines.</p>
+        <h3>Scalability and Efficiency</h3>
+        <p><b>Problem:</b> Scaling applications to handle increased demand is often complex and resource-intensive, especially when manual configuration is required.</p>
+        <p><b>Solution:</b> Docker enables rapid and efficient horizontal scaling by allowing multiple container instances to be deployed and managed easily. This is particularly valuable in cloud computing and microservices architectures, where scalability and flexibility are paramount.</p>
+    </section>
+    <section>
+        <h2>3. Docker Architecture and Workflow</h2>
+        <h3>Docker Engine</h3>
+        <p>The Docker Engine is the core component responsible for creating, running, and managing containers. It consists of:</p>
+        <ul>
+            <li><b>Docker Daemon (dockerd):</b> The background service that manages Docker objects such as images, containers, networks, and volumes. It listens for API requests and orchestrates the lifecycle of containers.</li>
+            <li><b>Docker CLI (docker):</b> The command-line interface that allows users to interact with the Docker daemon, facilitating tasks such as building images, running containers, and managing resources.</li>
+            <li><b>REST API:</b> Provides programmatic access to Docker, enabling automation and integration with external systems and tools.</li>
+        </ul>
+        <h3>Docker Workflow</h3>
+        <p>The typical Docker workflow involves the following steps:</p>
+        <ul>
+            <li><b>Write a Dockerfile:</b> Define the environment and instructions to build your application image.</li>
+            <li><b>Build the Image:</b> Use <code>docker build</code> to create an image from the Dockerfile.</li>
+            <li><b>Run a Container:</b> Use <code>docker run</code> to start a container from the image.</li>
+            <li><b>Share Images:</b> Push images to Docker Hub or a private registry for collaboration and deployment.</li>
+            <li><b>Orchestrate:</b> Use tools like Docker Compose or Kubernetes for multi-container and distributed applications.</li>
+        </ul>
+        <div style="text-align:center; margin:2em 0;">
+            <img src="/static/workflow.webp" alt="Docker Workflow" style="max-width:100%; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+        </div>
+    </section>
+    <section>
+        <h2>4. Key Docker Components</h2>
+        <h3>4.1 Docker Images</h3>
+        <p>A Docker image is a read-only, stand-alone package that contains everything needed to run a piece of software, including the code, runtime, libraries, environment variables, and configuration files. Images are the blueprint for containers and are built in layers, which promotes efficiency and reusability.</p>
+        <ul>
+            <li><b>Base Image:</b> The foundational layer, such as Ubuntu, Alpine, or Python, upon which other layers are built.</li>
+            <li><b>Application Code:</b> The source code and files necessary for the application to function.</li>
+            <li><b>Dependencies:</b> All required libraries, frameworks, and packages.</li>
+            <li><b>Metadata:</b> Information such as environment variables, labels, and exposed ports.</li>
+        </ul>
+        <h3>4.2 Dockerfile</h3>
+        <p>A Dockerfile is a plain text file containing a series of instructions for building a Docker image. Each instruction creates a new layer in the image, which makes the build process efficient and modular. Key instructions include:</p>
+        <ul>
+            <li><b>FROM:</b> Specifies the base image (e.g., <code>FROM ubuntu:20.04</code>).</li>
+            <li><b>LABEL:</b> Adds metadata (e.g., <code>LABEL version="1.0"</code>).</li>
+            <li><b>RUN:</b> Executes commands during the build process (e.g., <code>RUN apt-get update</code>).</li>
+            <li><b>COPY:</b> Copies files from the host to the image (e.g., <code>COPY . /app</code>).</li>
+            <li><b>ENV:</b> Sets environment variables (e.g., <code>ENV PATH /app/bin:$PATH</code>).</li>
+            <li><b>WORKDIR:</b> Sets the working directory for subsequent instructions (e.g., <code>WORKDIR /app</code>).</li>
+            <li><b>EXPOSE:</b> Declares network ports the container will listen on (e.g., <code>EXPOSE 8080</code>).</li>
+            <li><b>CMD:</b> Specifies the default command to run when the container starts (e.g., <code>CMD [\"python\", \"app.py\"]</code>).</li>
+            <li><b>VOLUME:</b> Designates mount points for external storage (e.g., <code>VOLUME [\"/data\"]</code>).</li>
+            <li><b>ARG:</b> Defines build-time variables (e.g., <code>ARG VERSION=1.0</code>).</li>
+        </ul>
+        <h3>4.3 Docker Containers</h3>
+        <p>A Docker container is a running instance of a Docker image. Containers are isolated, lightweight, and portable, encapsulating applications and their dependencies to ensure consistent operation across different platforms. Unlike virtual machines, containers share the host OS kernel, making them more efficient in terms of resource usage.</p>
+        <h3>4.4 Docker Compose</h3>
+        <p>Docker Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application's services, networks, and volumes, and then create and start all the services with a single command.</p>
+        <h3>4.5 Docker Hub and Registries</h3>
+        <p>A Docker registry is a centralized repository for storing, distributing, and managing Docker images. Docker Hub is the default public registry, but private and third-party registries (such as AWS ECR, Google GCR, and Azure ACR) are also widely used. Registries facilitate collaboration, version control, and secure image management.</p>
+    </section>
+    <section>
+        <h2>5. Essential Docker Commands</h2>
+        <ul style="list-style:none; padding:0;">
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker --version</div>
+                <div style="margin-top:4px;">Check your Docker version.<br><b>How:</b> Run this command in your terminal to verify Docker is installed and see the version.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker build -t &lt;image_name&gt; .</div>
+                <div style="margin-top:4px;">Build an image from a Dockerfile in the current directory.<br><b>How:</b> Replace <code>&lt;image_name&gt;</code> with your desired image name. Run this command in the folder containing your Dockerfile.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker images</div>
+                <div style="margin-top:4px;">List all local Docker images.<br><b>How:</b> Shows all images you have built or pulled locally.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker run -p &lt;host_port&gt;:&lt;container_port&gt; &lt;image_name&gt;</div>
+                <div style="margin-top:4px;">Run a container from an image and map ports.<br><b>How:</b> Replace <code>&lt;host_port&gt;</code> with the port on your computer, <code>&lt;container_port&gt;</code> with the port your app uses in the container, and <code>&lt;image_name&gt;</code> with your image name.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker ps</div>
+                <div style="margin-top:4px;">List running containers.<br><b>How:</b> Shows all containers currently running.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker ps -a</div>
+                <div style="margin-top:4px;">List all containers (running and stopped).<br><b>How:</b> Shows all containers, including those that have exited.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker stop &lt;container_id&gt;</div>
+                <div style="margin-top:4px;">Stop a running container.<br><b>How:</b> Replace <code>&lt;container_id&gt;</code> with the ID or name of the container you want to stop (see <code>docker ps</code>).</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker start &lt;container_id&gt;</div>
+                <div style="margin-top:4px;">Start a stopped container.<br><b>How:</b> Replace <code>&lt;container_id&gt;</code> with the ID or name of the container you want to start.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker rm &lt;container_id&gt;</div>
+                <div style="margin-top:4px;">Remove a container.<br><b>How:</b> Replace <code>&lt;container_id&gt;</code> with the ID or name of the container you want to remove.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker rmi &lt;image_name&gt;</div>
+                <div style="margin-top:4px;">Remove an image.<br><b>How:</b> Replace <code>&lt;image_name&gt;</code> with the name of the image you want to delete.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker logs &lt;container_id&gt;</div>
+                <div style="margin-top:4px;">View logs from a container.<br><b>How:</b> Replace <code>&lt;container_id&gt;</code> with the ID or name of the container.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker exec -it &lt;container_id&gt; /bin/bash</div>
+                <div style="margin-top:4px;">Open a shell inside a running container.<br><b>How:</b> Replace <code>&lt;container_id&gt;</code> with the ID or name of the running container. This gives you a shell prompt inside the container.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker-compose up</div>
+                <div style="margin-top:4px;">Start services defined in a docker-compose.yml file.<br><b>How:</b> Run this command in the directory containing your <code>docker-compose.yml</code> file.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker-compose down</div>
+                <div style="margin-top:4px;">Stop and remove services defined in a docker-compose.yml file.<br><b>How:</b> Run this command in the directory containing your <code>docker-compose.yml</code> file to stop and clean up all services.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker pull &lt;image_name&gt;</div>
+                <div style="margin-top:4px;">Download an image from Docker Hub or another registry.<br><b>How:</b> Replace <code>&lt;image_name&gt;</code> with the name of the image you want to download.</div>
+            </li>
+            <li style="margin-bottom:1.5em;">
+                <div style="background:#222;color:#fff;padding:10px 16px;border-radius:6px;font-family:monospace;">docker push &lt;image_name&gt;</div>
+                <div style="margin-top:4px;">Upload an image to Docker Hub or another registry.<br><b>How:</b> Replace <code>&lt;image_name&gt;</code> with the name of the image you want to upload. You must be logged in to the registry.</div>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>6. Practical Use Cases and Best Practices</h2>
+        <ul>
+            <li><b>Microservices Architecture:</b> Applications are decomposed into independent services, each running in its own container. This simplifies deployment, scaling, and maintenance, and allows teams to develop, update, and deploy services independently.</li>
+            <li><b>Continuous Integration/Continuous Deployment (CI/CD):</b> Docker ensures consistent environments throughout the software lifecycle, accelerating testing and deployment and reducing discrepancies between environments.</li>
+            <li><b>Cloud Migration:</b> Containerizing applications simplifies migration to the cloud, allowing them to run consistently across different providers and optimizing resource usage.</li>
+            <li><b>Scalable Web Applications:</b> Deploying web applications in containers enables rapid scaling in response to demand, ensuring consistent deployment and efficient resource utilization.</li>
+            <li><b>Testing and Quality Assurance:</b> Containers provide reproducible environments for automated and manual testing, speeding up test setup and facilitating automated testing workflows.</li>
+            <li><b>Machine Learning & Artificial Intelligence:</b> Containers support reproducible, scalable deployment of models and experiments, ensuring consistency in the runtime environment and simplifying collaboration.</li>
+            <li><b>API Development & Deployment:</b> Containers ensure reliable, scalable, and consistent API delivery across environments, improving deployment speed and reliability.</li>
+        </ul>
+        <h3>Best Practices</h3>
+        <ul>
+            <li>Keep images small and use official base images when possible.</li>
+            <li>Use multi-stage builds to optimize image size and security.</li>
+            <li>Leverage Docker Compose for local development and testing.</li>
+            <li>Regularly scan images for vulnerabilities and keep dependencies up to date.</li>
+            <li>Document your Dockerfiles and Compose files for team collaboration.</li>
+        </ul>
+    </section>
+    <section>
+        <h2>7. Conclusion</h2>
+        <p>Docker has revolutionized software engineering by introducing a robust, portable, and scalable approach to application deployment. Its containerization paradigm is now integral to both academic research and industrial practice. Mastery of Docker is essential for modern software professionals and scholars seeking to build reliable, scalable, and portable systems.</p>
+    </section>
+    <section>
+        <h2>8. Further Reading and Resources</h2>
+        <ul>
+            <li><a href="https://docs.docker.com/get-started/" target="_blank">Get Started with Docker</a></li>
+            <li><a href="https://docs.docker.com/guides/" target="_blank">Docker Guides</a></li>
+            <li><a href="https://docs.docker.com/manuals/" target="_blank">Docker Manuals</a></li>
+            <li><a href="https://docs.docker.com/reference/" target="_blank">Docker CLI and API Reference</a></li>
+            <li><a href="https://docs.docker.com/compose/gettingstarted/" target="_blank">Try Docker Compose</a></li>
+        </ul>
+    </section>
+</div>
+</body>
+</html>
